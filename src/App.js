@@ -9,7 +9,7 @@ import axios from "axios";
 class App extends Component {
   state = {
     result:[],
-    isLoading:false
+    isLoading:true
   }
 
   componentWillMount() {
@@ -20,16 +20,17 @@ class App extends Component {
 
   getResult = async(query='pasta')=>{
     this.setState({result:[]})
-    this.controlIsLoading()
+    if (this.state.isLoading===false) this.controlIsLoading()
     try {
       const key = '280a7ce696849503c24e83daf3999460';
       const res = await axios(`https://www.food2fork.com/api/search?key=${key}&q=${query}`);
       const resu = res.data.recipes;
       // console.log(result)
       this.setState({
-        result: resu
+        result: resu,
+        isLoading:false
       })
-      this.controlIsLoading()
+      
     }
     catch (err) {
         alert(err);

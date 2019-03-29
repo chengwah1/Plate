@@ -22,7 +22,7 @@ class App extends Component {
     this.setState({result:[]})
     this.controlIsLoading()
     try {
-      const key = 'e87e7facbf6fcd6eb7bf8dc493d67235';
+      const key = '280a7ce696849503c24e83daf3999460';
       const res = await axios(`https://www.food2fork.com/api/search?key=${key}&q=${query}`);
       const resu = res.data.recipes;
       // console.log(result)

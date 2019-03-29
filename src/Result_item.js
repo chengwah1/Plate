@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 
@@ -20,6 +20,5 @@ const Result_item = (props) => {
 
 Result_item.propTypes = {
     item: PropTypes.object.isRequired,
-    key: PropTypes.number
 }
 export default Result_item;

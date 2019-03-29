@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './Shopping.css';
 
 
 const Shopping = (props) => {
     return (
         <div className="shopping">
-            <h2 className="heading-2">My Shopping List</h2>
+            {/* <h2 className="heading-2">My Shopping List</h2>
 
             <ul className="shopping__list">
 
@@ -92,7 +92,7 @@ const Shopping = (props) => {
             <div className="Powered-by">
                 Powered by
                 <a href="http://food2fork.com" target="_blank" className="link">Food2Fork.com</a>.
-            </div>
+            </div> */}
 
         </div>
     );

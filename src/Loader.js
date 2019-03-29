@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 const Loader = (props)=>{
     if(props.isLoading){
         return(
-            <div class = "loader">
+            <div className = "loader">
                 <svg>
                     <use href= "img/icons.svg#icon-cw"></use>
                 </svg>

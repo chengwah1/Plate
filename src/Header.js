@@ -12,6 +12,9 @@ class Header extends Component {
     handleSubmit=(e)=> {
         e.preventDefault();
         this.props.handleGetResult(this.state.searchText)
+        this.setState({
+            searchText:''
+        })
       }
     
     handleChange=(e)=> {
@@ -26,7 +29,8 @@ class Header extends Component {
                     <input type="text" 
                     className="search__field" 
                     placeholder="Search over 1,000,000 recipes..."
-                    onChange={this.handleChange}/>
+                    onChange={this.handleChange}
+                    value={this.state.searchText}/>
                     <button className="btn search__btn">
                         <svg className="search__icon">
                             <use href="img/icons.svg#icon-magnifying-glass"></use>

@@ -3,9 +3,14 @@ import PropTypes from 'prop-types';
 
 
 const Result_item = (props) => {
+    const handleActiveId=(e)=>{
+        e.preventDefault();
+        props.setActiveId(props.item.recipe_id)
+    }
     return (
             <li>
-                <a className="results__link results__link--active" href={props.item.recipe_id}>
+                <a className={props.item.recipe_id===props.isActive?"results__link results__link--active":"results__link"}
+                href={props.item.recipe_id} onClick={handleActiveId}>
                     <figure className="results__fig">
                         <img src={props.item.image_url} alt={props.item.title}/>
                     </figure>
@@ -20,5 +25,7 @@ const Result_item = (props) => {
 
 Result_item.propTypes = {
     item: PropTypes.object.isRequired,
+    isActive: PropTypes.string.isRequired,
+    setActiveId: PropTypes.func.isRequired,
 }
 export default Result_item;

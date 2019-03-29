@@ -9,7 +9,8 @@ import axios from "axios";
 class App extends Component {
   state = {
     result:[],
-    isLoading:true
+    isLoading:true,
+    isActive:"",
   }
 
   componentWillMount() {
@@ -38,8 +39,8 @@ class App extends Component {
     }
   }
 
-
-
+  setActiveId=(id)=>this.setState({isActive:id})
+  
   render() {
     return (
       <div className="App">
@@ -48,7 +49,9 @@ class App extends Component {
         <Result 
         displaySearchResult={this.state.result} 
         controlIsLoading={this.controlIsLoading}
-        isLoading={this.state.isLoading}/>
+        isLoading={this.state.isLoading}
+        isActive={this.state.isActive}
+        setActiveId={this.setActiveId}/>
         <Recipe/>
         <Shopping/>
         </div>

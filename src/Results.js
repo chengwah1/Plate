@@ -12,6 +12,8 @@ const Result = (props) => {
             {props.displaySearchResult.map((item,index)=><Result_item
             item={item}
             key={index}
+            isActive={props.isActive}
+            setActiveId={props.setActiveId}
             />)}
 
         </ul>
@@ -40,6 +42,8 @@ const Result = (props) => {
 Result.propTypes = {
     displaySearchResult: PropTypes.array.isRequired,
     controlIsLoading: PropTypes.func,
-    isLoading: PropTypes.bool.isRequired
+    isLoading: PropTypes.bool.isRequired,
+    isActive: PropTypes.string.isRequired,
+    setActiveId: PropTypes.func.isRequired
 }
 export default Result;

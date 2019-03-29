@@ -1,36 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './Result.css';
 import Result_item from './Result_item';
+import Loader from './Loader';
 
 const Result = (props) => {
     return (
     <div className="results">
         <ul className="results__list">
-            <Result_item/>
-
-            <li>
-                <a className="results__link" href="#76767">
-                    <figure className="results__fig">
-                        <img src="img/test-2.jpg" alt="Test"/>
-                    </figure>
-                    <div className="results__data">
-                        <h4 className="results__name">Pasta Salad with ...</h4>
-                        <p className="results__author">Spicy Perspective</p>
-                    </div>
-                </a>
-            </li>
-
-            <li>
-                <a className="results__link" href="#85354">
-                    <figure className="results__fig">
-                        <img src="img/test-3.jpg" alt="Test"/>
-                    </figure>
-                    <div className="results__data">
-                        <h4 className="results__name">Homemade Tomato ...</h4>
-                        <p className="results__author">All Recipes</p>
-                    </div>
-                </a>
-            </li>
+            <Loader controlIsLoading={props.controlIsLoading} isLoading={props.isLoading}/>
+            {props.displaySearchResult.map((item,index)=><Result_item
+            item={item}
+            key={index}
+            />)}
 
         </ul>
 
@@ -55,4 +37,9 @@ const Result = (props) => {
     );
 }
 
+Result.propTypes = {
+    displaySearchResult: PropTypes.array.isRequired,
+    controlIsLoading: PropTypes.func,
+    isLoading: PropTypes.bool.isRequired
+}
 export default Result;

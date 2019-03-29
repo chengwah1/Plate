@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import './Recipe.css';
+import Recipe__ingredients from './Recipe__ingredients'
 
 
 const Recipe = (props) => {
+
+    const recipe = props.displayRecipe.forEach(element => {
+        if (props.isActive===element.recipe_id)
+        return element
+    });
+
     return (
         <div className="recipe">
 
-            <figure className="recipe__fig">
-                <img src="img/test-1.jpg" alt="Tomato" className="recipe__img"/>
+            {/* <figure className="recipe__fig">
+                <img src={recipe.image_url} alt="Tomato" className="recipe__img"/>
                 <h1 className="recipe__title">
-                    <span>Pasta with tomato cream sauce</span>
+                    <span>{recipe.title}</span>
                 </h1>
-            </figure>
+            </figure> */}
             <div className="recipe__details">
                 <div className="recipe__info">
                     <svg className="recipe__info-icon">
@@ -50,65 +57,10 @@ const Recipe = (props) => {
 
             <div className="recipe__ingredients">
                 <ul className="recipe__ingredient-list">
-                    <li className="recipe__item">
-                        <svg className="recipe__icon">
-                            <use href="img/icons.svg#icon-check"></use>
-                        </svg>
-                        <div className="recipe__count">1000</div>
-                        <div className="recipe__ingredient">
-                            <span className="recipe__unit">g</span> pasta
-                        </div>
-                    </li>
-
-                    <li className="recipe__item">
-                        <svg className="recipe__icon">
-                            <use href="img/icons.svg#icon-check"></use>
-                        </svg>
-                        <div className="recipe__count">1/2</div>
-                        <div className="recipe__ingredient">
-                            <span className="recipe__unit">cup</span> ricotta cheese
-                        </div>
-                    </li>
-
-                    <li className="recipe__item">
-                        <svg className="recipe__icon">
-                            <use href="img/icons.svg#icon-check"></use>
-                        </svg>
-                        <div className="recipe__count">1</div>
-                        <div className="recipe__ingredient">
-                            <span className="recipe__unit"></span> can of tomatoes, whole or crushed
-                        </div>
-                    </li>
-
-                    <li className="recipe__item">
-                        <svg className="recipe__icon">
-                            <use href="img/icons.svg#icon-check"></use>
-                        </svg>
-                        <div className="recipe__count">1</div>
-                        <div className="recipe__ingredient">
-                            <span className="recipe__unit"></span> can tuna packed in olive oil
-                        </div>
-                    </li>
-
-                    <li className="recipe__item">
-                        <svg className="recipe__icon">
-                            <use href="img/icons.svg#icon-check"></use>
-                        </svg>
-                        <div className="recipe__count">1/2</div>
-                        <div className="recipe__ingredient">
-                            <span className="recipe__unit">cup</span> grated parmesan cheese
-                        </div>
-                    </li>
-
-                    <li className="recipe__item">
-                        <svg className="recipe__icon">
-                            <use href="img/icons.svg#icon-check"></use>
-                        </svg>
-                        <div className="recipe__count">1/4</div>
-                        <div className="recipe__ingredient">
-                            <span className="recipe__unit">cup</span> fresh basil, chopped or torn
-                        </div>
-                    </li>
+                    {props.displayIngredients.map((el,index)=><Recipe__ingredients
+                    el={el}
+                    key={index}
+                    />)}
                 </ul>
 
                 <button className="btn-small recipe__btn">
@@ -119,20 +71,20 @@ const Recipe = (props) => {
                 </button>
             </div>
 
-            <div className="recipe__directions">
+            {/* <div className="recipe__directions">
                 <h2 className="heading-2">How to cook it</h2>
                 <p className="recipe__directions-text">
-                    This recipe was carefully designed and tested by
-                    <span className="recipe__by">The Pioneer Woman</span>. Please check out directions at their website.
+                    This recipe was carefully designed and tested by 
+                    <span className="recipe__by">{recipe.publisher}</span>. Please check out directions at their website.
                 </p>
-                <a className="btn-small recipe__btn" href="http://thepioneerwoman.com/cooking/pasta-with-tomato-cream-sauce/" target="_blank">
+                <a className="btn-small recipe__btn" href={recipe.source_url} target="_blank">
                     <span>Directions</span>
                     <svg className="search__icon">
                         <use href="img/icons.svg#icon-triangle-right"></use>
                     </svg>
 
                 </a>
-            </div>
+            </div> */}
 
         </div>
     );

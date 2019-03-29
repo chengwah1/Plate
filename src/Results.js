@@ -11,6 +11,7 @@ const Result = (props) => {
     const indexStart = (props.currentPage-1)*resPerPage;
     const indexEnd = (props.currentPage)*resPerPage;
     const totalPages = Math.ceil(props.displaySearchResult.length/resPerPage);
+    
 
     return (
     <div className="results">
@@ -21,6 +22,7 @@ const Result = (props) => {
             key={index}
             isActive={props.isActive}
             setActiveId={props.setActiveId}
+            getRecipe={props.getRecipe}
             />)}
         </ul>
 

@@ -7,7 +7,6 @@ const Result_item = (props) => {
     const handleActiveId=(e)=>{
         e.preventDefault();
         props.setActiveId(props.item.recipe_id);
-        props.getRecipe(props.item.recipe_id);
     }
     return (
             <li>

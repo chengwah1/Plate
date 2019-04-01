@@ -16,13 +16,11 @@ const Result = (props) => {
     return (
     <div className="results">
         <ul className="results__list">
-            <Loader controlIsLoading={props.controlIsLoading} isLoading={props.isLoading}/>
             {props.displaySearchResult.slice(indexStart,indexEnd).map((item,index)=><Result_item
             item={item}
             key={index}
             isActive={props.isActive}
             setActiveId={props.setActiveId}
-            getRecipe={props.getRecipe}
             />)}
         </ul>
 
@@ -39,8 +37,6 @@ const Result = (props) => {
 
 Result.propTypes = {
     displaySearchResult: PropTypes.array.isRequired,
-    controlIsLoading: PropTypes.func,
-    isLoading: PropTypes.bool.isRequired,
     isActive: PropTypes.string.isRequired,
     setActiveId: PropTypes.func.isRequired,
     currentPage: PropTypes.number.isRequired,

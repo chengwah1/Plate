@@ -29,7 +29,7 @@ class Recipe extends PureComponent{
     getRecipe = async(id='47032')=>{
         if (this.state.isLoading===false) this.handleIsLoading()
         try {
-          const key = '0b8a037fbe9ffb3d9385542037f69a63';
+          const key = '52d58ed2ebe261a2ea3a0abdd36d58f9';
           const res = await axios.get(`https://www.food2fork.com/api/get?key=${key}&rId=${id}`);
           console.log(`gotten result ${res.data}`)
           
@@ -107,7 +107,10 @@ class Recipe extends PureComponent{
         });
         return newIngredients;
     }
-
+    passIngredientUp=()=>{
+        // calladtoshopping passing this.Recipe
+        this.props.handleAddToShopping(this.Recipe)
+    }
     
     render(){
         console.log(`trying to render : ${this.Recipe}`)
@@ -135,7 +138,7 @@ class Recipe extends PureComponent{
                     />)}
                 </ul>
 
-                <button className="btn-small recipe__btn">
+                <button className="btn-small recipe__btn" onClick={this.passIngredientUp}>
                     <svg className="search__icon">
                         <use href="img/icons.svg#icon-shopping-cart"></use>
                     </svg>

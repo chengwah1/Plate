@@ -22,7 +22,9 @@ class App extends Component {
     this.getResult();
   }
 
-  controlToggle = (property) => this.setState({property: !this.state.property})
+  controlToggle = (property) => {
+    this.setState({[property]: !this.state.property})
+  }
   // updating state based on prevstate 
   // to avoid state inconsistent 
   setCurrentPage = (type)=> {
@@ -44,7 +46,7 @@ class App extends Component {
   getResult = async(query)=>{
     if (this.state.isLoading===false) this.controlToggle('isLoading')
     try {
-      const key = '0b8a037fbe9ffb3d9385542037f69a63';
+      const key = '52d58ed2ebe261a2ea3a0abdd36d58f9';
       const res = await axios(`https://www.food2fork.com/api/search?key=${key}&q=${query}`);
       const resu = res.data.recipes;
       // console.log(result)
@@ -66,6 +68,15 @@ class App extends Component {
   }
   setActiveId=(id)=>this.setState({isActive:id})
   
+  handleAddToShopping=(Recipe)=>{
+    this.Recipe = Recipe;
+    console.log(666)
+    if(this.state.addToShopping===false){this.controlToggle('addToShopping')}
+    
+  }
+  deleteShoppingItem=()=>{
+
+  }
   render() {
 
     return (
@@ -89,11 +100,14 @@ class App extends Component {
         isActive={this.state.isActive}
         serving={this.state.serving}
         handleServing={this.handleServ}
+        handleAddToShopping={this.handleAddToShopping}
         />
 
         <Shopping 
         addToShopping={this.state.addToShopping}
-        toggleShopping={this.controlToggle} />
+        toggleShopping={this.controlToggle}
+        recipe_data={this.Recipe}
+        serving={this.state.serving} />
         </div>
       </div>
     );

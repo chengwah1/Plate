@@ -42,7 +42,7 @@ class App extends Component {
   getResult = async(query)=>{
     if (this.state.isLoading===false) this.controlIsLoading()
     try {
-      const key = '6860447610bc7994b14fb1bc9153d8b3';
+      const key = '0b8a037fbe9ffb3d9385542037f69a63';
       const res = await axios(`https://www.food2fork.com/api/search?key=${key}&q=${query}`);
       const resu = res.data.recipes;
       // console.log(result)

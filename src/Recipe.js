@@ -7,10 +7,14 @@ import axios from "axios";
 
 
 
+
 class Recipe extends PureComponent{
     constructor(props){
         super(props)
-        this.state = {isLoading:true}
+        this.state = {
+            isLoading:true,
+            serving:4,
+        }
     }
     componentWillMount(){
         this.getRecipe(this.props.isActive);
@@ -29,7 +33,7 @@ class Recipe extends PureComponent{
     getRecipe = async(id='47032')=>{
         if (this.state.isLoading===false) this.handleIsLoading()
         try {
-          const key = '6860447610bc7994b14fb1bc9153d8b3';
+          const key = '0b8a037fbe9ffb3d9385542037f69a63';
           const res = await axios.get(`https://www.food2fork.com/api/get?key=${key}&rId=${id}`);
           console.log(`gotten result ${res.data}`)
           
@@ -48,7 +52,6 @@ class Recipe extends PureComponent{
         }
         
     }
-    
     parseIngredients(ingToBeParse) {
         const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds'];
         const unitsShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
@@ -108,9 +111,14 @@ class Recipe extends PureComponent{
         });
         return newIngredients;
     }
-
+    handleServ=(type)=>{
+        if(type === 'minus' && this.state.serving>0){
+            this.setState(prevState => {return {serving:prevState.serving-1}})
+        }else if(type === 'plus') this.setState(prevState => {return {serving:prevState.serving+1}})
+    }
     render(){
         console.log(`trying to render : ${this.Recipe}`)
+        console.log(this.Recipe)
         if(!this.state.isLoading)
         return(
         <div className="recipe">
@@ -120,12 +128,16 @@ class Recipe extends PureComponent{
                     <span>{this.Recipe.recipe.title}</span>
                 </h1>
             </figure>
-            <Recipe_serving/>
+            <Recipe_serving
+            recipe={this.Recipe}
+            serving={this.state.serving}
+            handleServing={this.handleServ} />
             <div className="recipe__ingredients">
                 <ul className="recipe__ingredient-list">
                     {this.Recipe.recipe.ingredients.map((el,index)=><Recipe__ingredients
                     el={el}
                     key={index}
+                    serving={this.state.serving}
                     />)}
                 </ul>
 
@@ -136,8 +148,6 @@ class Recipe extends PureComponent{
                     <span>Add to shopping list</span>
                 </button>
             </div>
-
-            
 
             <div className="recipe__directions">
                 <h2 className="heading-2">How to cook it</h2>

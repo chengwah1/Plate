@@ -1,6 +1,9 @@
 import React from 'react';
 
 const Recipe_serving = (props)=>{
+    const recipe = props.recipe;
+    const serving = props.serving
+
     return(
             <div className="recipe__details">
                 <div className="recipe__info">
@@ -14,16 +17,16 @@ const Recipe_serving = (props)=>{
                     <svg className="recipe__info-icon">
                         <use href="img/icons.svg#icon-man"></use>
                     </svg>
-                    <span className="recipe__info-data recipe__info-data--people">4</span>
-                    <span className="recipe__info-text"> servings</span>
+                    <span className="recipe__info-data recipe__info-data--people">{serving}</span>
+                    <span className="recipe__info-text"> {serving>1?"servings":"serving"}</span>
 
                     <div className="recipe__info-buttons">
-                        <button className="btn-tiny">
+                        <button className="btn-tiny btn-minus" onClick={()=>props.handleServing('minus')}>
                             <svg>
                                 <use href="img/icons.svg#icon-circle-with-minus"></use>
                             </svg>
                         </button>
-                        <button className="btn-tiny">
+                        <button className="btn-tiny btn-plus" onClick={()=>props.handleServing('plus')}>
                             <svg>
                                 <use href="img/icons.svg#icon-circle-with-plus"></use>
                             </svg>

@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Loader = (props)=>{
-    if(props.isLoading){
+const Loader = ()=>{
         return(
             <div className = "loader">
                 <svg>
@@ -10,8 +9,6 @@ const Loader = (props)=>{
                 </svg>
             </div>
         )
-    }
-    return null;
 }
 
 Loader.propTypes = {

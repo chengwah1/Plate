@@ -1,16 +1,15 @@
 import React from 'react';
 
 const Recipe_serving = (props)=>{
-    const recipe = props.recipe;
+    const numIngredients = props.recipe.recipe.ingredients.length;
     const serving = props.serving
-
     return(
             <div className="recipe__details">
                 <div className="recipe__info">
                     <svg className="recipe__info-icon">
                         <use href="img/icons.svg#icon-stopwatch"></use>
                     </svg>
-                    <span className="recipe__info-data recipe__info-data--minutes">45</span>
+                    <span className="recipe__info-data recipe__info-data--minutes">{numIngredients*5}</span>
                     <span className="recipe__info-text"> minutes</span>
                 </div>
                 <div className="recipe__info">

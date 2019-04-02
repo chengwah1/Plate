@@ -11,15 +11,18 @@ import Loader from './Loader';
 class App extends Component {
   state = {
     result:[],
+    recipe:{},
     isLoading:true,
     isActive:"47746",
     currentPage:1,
-    addToShopping: false,
-    serving:4
+    addToShopping: [],
+    serving:4,
+    recipeIsLoading:true
   }
 
   componentWillMount() {
     this.getResult();
+    this.getRecipe(this.props.isActive);
   }
 
   controlToggle = (property) => {
@@ -46,7 +49,7 @@ class App extends Component {
   getResult = async(query)=>{
     if (this.state.isLoading===false) this.controlToggle('isLoading')
     try {
-      const key = '52d58ed2ebe261a2ea3a0abdd36d58f9';
+      const key = '0b8a037fbe9ffb3d9385542037f69a63';
       const res = await axios(`https://www.food2fork.com/api/search?key=${key}&q=${query}`);
       const resu = res.data.recipes;
       // console.log(result)
@@ -60,19 +63,107 @@ class App extends Component {
         alert(err);
     }
   }
+  getRecipe = async(id='47032')=>{
+    if (this.state.recipeIsLoading===false) this.controlToggle('recipeIsLoading')
+    try {
+      const key = '0b8a037fbe9ffb3d9385542037f69a63';
+      const res = await axios.get(`https://www.food2fork.com/api/get?key=${key}&rId=${id}`);
+      console.log(`gotten result ${res.data}`)
+      
+        const get_ingredients = res.data.recipe.ingredients;
+        const newGet_ingredients = this.parseIngredients(get_ingredients);
+        res.data.recipe.ingredients = newGet_ingredients;
+        this.setState({
+            recipe:res.data,
+            isActive:id,
+            recipeIsLoading:false
+        })
+    }
+    catch (err) {
+        console.log(err);
+        alert('Something went wrong :(')
+    }
+    
+  }
+  parseIngredients(ingToBeParse) {
+    const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds'];
+    const unitsShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
+    const units = [...unitsShort, 'kg', 'g'];
+
+    const newIngredients = ingToBeParse.map(el => {
+        // 1) Uniform units
+        let ingredient = el.toLowerCase();
+        unitsLong.forEach((unit, i) => {
+            ingredient = ingredient.replace(unit, unitsShort[i]);
+        });
+
+        // 2) Remove parentheses
+        ingredient = ingredient.replace(/ *\([^)]*\) */g, ' ');
+
+        // 3) Parse ingredients into count, unit and ingredient
+        const arrIng = ingredient.split(' ');
+        const unitIndex = arrIng.findIndex(el2 => units.includes(el2));
+
+        let objIng;
+        if (unitIndex > -1) {
+            // There is a unit
+            // Ex. 4 1/2 cups, arrCount is [4, 1/2] --> eval("4+1/2") --> 4.5
+            // Ex. 4 cups, arrCount is [4]
+            const arrCount = arrIng.slice(0, unitIndex);
+            
+            let count;
+            if (arrCount.length === 1) {
+                count = eval(arrIng[0].replace('-', '+'));
+            } else {
+                count = eval(arrIng.slice(0, unitIndex).join('+'));
+            }
+
+            objIng = {
+                count,
+                unit: arrIng[unitIndex],
+                ingredient: arrIng.slice(unitIndex + 1).join(' ')
+            };
+
+        } else if (parseInt(arrIng[0], 10)) {
+            // There is NO unit, but 1st element is number
+            objIng = {
+                count: parseInt(arrIng[0], 10),
+                unit: '',
+                ingredient: arrIng.slice(1).join(' ')
+            }
+        } else if (unitIndex === -1) {
+            // There is NO unit and NO number in 1st position
+            objIng = {
+                count: 1,
+                unit: '',
+                ingredient
+            }
+        }
+
+        return objIng;
+    });
+    return newIngredients;
+  }
 
   handleServ=(type)=>{
     if(type === 'minus' && this.state.serving>0){
         this.setState(prevState => {return {serving:prevState.serving-1}})
     }else if(type === 'plus') this.setState(prevState => {return {serving:prevState.serving+1}})
   }
-  setActiveId=(id)=>this.setState({isActive:id})
+  setActiveId=(id)=>{
+    this.getRecipe(id)
+  }
   
-  handleAddToShopping=(Recipe)=>{
-    this.Recipe = Recipe;
-    console.log(666)
-    if(this.state.addToShopping===false){this.controlToggle('addToShopping')}
-    
+  handleAddToShopping = () => {
+    this.setState(prevState => {
+      if(prevState.isActive!==this.state.isActive)
+        return {
+            addToShopping: [...prevState.recipe.recipe.ingredients.map(el => ({
+                ...el,
+                count: el.count * (prevState.serving / 4)
+            })),...prevState.addToShopping]
+        }
+    })
   }
   deleteShoppingItem=()=>{
 
@@ -97,17 +188,19 @@ class App extends Component {
         }
 
         <Recipe 
+        Recipe={this.state.recipe}
+        recipeIsLoading={this.state.recipeIsLoading}
         isActive={this.state.isActive}
         serving={this.state.serving}
         handleServing={this.handleServ}
         handleAddToShopping={this.handleAddToShopping}
         />
 
-        <Shopping 
+        {/* <Shopping 
         addToShopping={this.state.addToShopping}
         toggleShopping={this.controlToggle}
         recipe_data={this.Recipe}
-        serving={this.state.serving} />
+        serving={this.state.serving} /> */}
         </div>
       </div>
     );

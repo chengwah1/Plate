@@ -156,7 +156,6 @@ class App extends Component {
   
   handleAddToShopping = () => {
     this.setState(prevState => {
-      if(prevState.isActive!==this.state.isActive)
         return {
             addToShopping: [...prevState.recipe.recipe.ingredients.map(el => ({
                 ...el,
@@ -165,8 +164,13 @@ class App extends Component {
         }
     })
   }
-  deleteShoppingItem=()=>{
-
+  deleteShoppingItem=(id)=>{
+    this.setState(prevState=>{
+      prevState.addToShopping.splice(id,1)
+      return {
+        addToShopping: prevState.addToShopping
+      };
+    })
   }
   render() {
 
@@ -196,11 +200,10 @@ class App extends Component {
         handleAddToShopping={this.handleAddToShopping}
         />
 
-        {/* <Shopping 
+        <Shopping 
         addToShopping={this.state.addToShopping}
-        toggleShopping={this.controlToggle}
-        recipe_data={this.Recipe}
-        serving={this.state.serving} /> */}
+        serving={this.state.serving}
+        deleteShoppingItem={this.deleteShoppingItem} />
         </div>
       </div>
     );

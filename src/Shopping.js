@@ -4,18 +4,21 @@ import Shopping_item from './Shopping_item'
 
 
 const Shopping = (props) => {
-    console.log(props.recipe_data)
-    console.log(`this is add to shopping bool ${props.addToShopping}`)
-    if(props.addToShopping && props.recipe_data){
+
+    
+
+    if(props.addToShopping.length>0){
         return (
             <div className="shopping">
                 <h2 className="heading-2">My Shopping List</h2>
     
                 <ul className="shopping__list">
-                {props.recipe_data.recipe.ingredients.map((el,index)=><Shopping_item
+                {props.addToShopping.map((el,index)=><Shopping_item
                 ingredient_item={el}
-                key={index} 
-                serving={props.serving}/>)}
+                key={index}
+                id={index}
+                handleRemoveShoppingItem={props.deleteShoppingItem}
+                />)}
                 </ul>
     
                 <div className="Powered-by">
@@ -25,7 +28,17 @@ const Shopping = (props) => {
     
             </div>
         )
-    }else return null;
+    }else return (
+        <div className="shopping">
+            <h2 className="heading-2">My Shopping List</h2>
+
+            <div className="Powered-by">
+                Powered by
+                <a href="http://food2fork.com" target="_blank" className="link">Food2Fork.com</a>.
+            </div>
+
+        </div>
+    );
 
 }
 

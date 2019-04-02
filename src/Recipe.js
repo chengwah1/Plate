@@ -5,15 +5,11 @@ import Recipe_serving from './Recipe_serving';
 import Loader from './Loader';
 import axios from "axios";
 
-
-
-
 class Recipe extends PureComponent{
     constructor(props){
         super(props)
         this.state = {
             isLoading:true,
-            serving:4,
         }
     }
     componentWillMount(){
@@ -111,11 +107,8 @@ class Recipe extends PureComponent{
         });
         return newIngredients;
     }
-    handleServ=(type)=>{
-        if(type === 'minus' && this.state.serving>0){
-            this.setState(prevState => {return {serving:prevState.serving-1}})
-        }else if(type === 'plus') this.setState(prevState => {return {serving:prevState.serving+1}})
-    }
+
+    
     render(){
         console.log(`trying to render : ${this.Recipe}`)
         console.log(this.Recipe)
@@ -130,14 +123,15 @@ class Recipe extends PureComponent{
             </figure>
             <Recipe_serving
             recipe={this.Recipe}
-            serving={this.state.serving}
-            handleServing={this.handleServ} />
+            serving={this.props.serving}
+            handleServing={this.props.handleServing} />
+
             <div className="recipe__ingredients">
                 <ul className="recipe__ingredient-list">
                     {this.Recipe.recipe.ingredients.map((el,index)=><Recipe__ingredients
                     el={el}
                     key={index}
-                    serving={this.state.serving}
+                    serving={this.props.serving}
                     />)}
                 </ul>
 

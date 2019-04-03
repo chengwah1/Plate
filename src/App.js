@@ -28,7 +28,7 @@ class App extends Component {
       this.readStore();
       swal({
         title: "Input Your API key",
-        text: `you can create one at food2fork.com`,
+        text: `You can create one at food2fork.com`,
         icon: "warning",
         buttons: true,
         content:"input"

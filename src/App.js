@@ -24,6 +24,7 @@ class App extends Component {
   componentWillMount() {
     this.getResult();
     this.getRecipe(this.props.isActive);
+    this.readStore()
   }
 
   controlToggle = (property) => {
@@ -53,7 +54,7 @@ class App extends Component {
   getResult = async(query)=>{
     if (this.state.isLoading===false) this.controlToggle('isLoading')
     try {
-      const key = '4b02d430081ecbce708a264d5792b53a';
+      const key = '29614018f82e702cf3434e9a98dfdb6d';
       const res = await axios(`https://www.food2fork.com/api/search?key=${key}&q=${query}`);
       const resu = res.data.recipes;
       // console.log(result)
@@ -70,11 +71,10 @@ class App extends Component {
   // *******************
   // ***Recipe Result***
   // *******************
-
   getRecipe = async(id='47032')=>{
     if (this.state.recipeIsLoading===false) this.controlToggle('recipeIsLoading')
     try {
-      const key = '4b02d430081ecbce708a264d5792b53a';
+      const key = '29614018f82e702cf3434e9a98dfdb6d';
       const res = await axios.get(`https://www.food2fork.com/api/get?key=${key}&rId=${id}`);
       console.log(`gotten result ${res.data}`)
       
@@ -91,7 +91,6 @@ class App extends Component {
         console.log(err);
         alert('Something went wrong :(')
     }
-    
   }
   parseIngredients(ingToBeParse) {
     const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds'];
@@ -152,7 +151,6 @@ class App extends Component {
     });
     return newIngredients;
   }
-
   handleServ=(type)=>{
     if(type === 'minus' && this.state.serving>0){
         this.setState(prevState => {return {serving:prevState.serving-1}})
@@ -174,7 +172,6 @@ class App extends Component {
         }
     })
   }
-
   deleteShoppingItem=(id)=>{
     this.setState(prevState=>{
       prevState.addToShopping.splice(id,1)
@@ -194,6 +191,7 @@ class App extends Component {
         return {
           likedList: [prevState.recipe, ...prevState.likedList]
         }
+        
       })
     }else{
       this.setState(prevState=>{
@@ -202,16 +200,27 @@ class App extends Component {
           likedList: [...prevState.likedList.slice(0, index), ...prevState.likedList.slice(index + 1)]
         }
       })
-      
     }
- 
-
   }
   Liked=()=>{
     return (this.state.likedList.findIndex(el=>el.recipe.recipe_id===this.state.isActive) !== -1)
   }
+  // *******************
+  // ***Local Storage***
+  // *******************
+  componentDidUpdate(prevState) {
+    if (prevState.likedList !== this.state.likedList) {
+      this.persistData ()
+    }
+  }
+  persistData (){
+    localStorage.setItem('like', JSON.stringify(this.state.likedList));
+  }
+  readStore(){
+    const store = JSON.parse(localStorage.getItem('like'));
+    if(store) this.state.likedList = store;
+  }
   render() {
-
     return (
       <div className="App">
         <div className="container">

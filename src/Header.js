@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Header.css';
+import Like_Panel from './Like_Panel';
 import PropTypes from 'prop-types';
 
 class Header extends Component {
@@ -39,26 +40,22 @@ class Header extends Component {
                     </button>
                 </form>
                 <div className="likes">
-                <div className="likes__field">
-                    <svg className="likes__icon">
-                        <use href="img/icons.svg#icon-heart"></use>
-                    </svg>
-                </div>
-                <div className="likes__panel">
-                    <ul className="likes__list">
-                        <li>
-                            <a className="likes__link" href="#23456">
-                                <figure className="likes__fig">
-                                    <img src="/img/test-1.jpg" alt="Test" />
-                                </figure>
-                                <div className="likes__data">
-                                    <h4 className="likes__name">Pasta with Tomato ...</h4>
-                                    <p className="likes__author">The Pioneer Woman</p>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                    <div className="likes__field">
+                        <svg className="likes__icon">
+                            <use href="img/icons.svg#icon-heart" style={{visibility: this.props.likedList.length>0? 'visible' : 'hidden' }}></use>
+                        </svg>
+                    </div>
+                    <div className="likes__panel">
+                        <ul className="likes__list">
+                            {this.props.likedList.map(el=><Like_Panel
+                            image={el.recipe.image_url}
+                            publisher={el.recipe.publisher}
+                            title={el.recipe.title}
+                            id={el.recipe.recipe_id}
+                            key={el.recipe.recipe_id}
+                            setActiveId={this.props.setActiveId} />)}
+                        </ul>
+                    </div>
                 </div>
           </header>
         );

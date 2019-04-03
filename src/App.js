@@ -53,7 +53,7 @@ class App extends Component {
   getResult = async(query)=>{
     if (this.state.isLoading===false) this.controlToggle('isLoading')
     try {
-      const key = '2e73868ca55f3a5d232f9a141d6f738a';
+      const key = '4b02d430081ecbce708a264d5792b53a';
       const res = await axios(`https://www.food2fork.com/api/search?key=${key}&q=${query}`);
       const resu = res.data.recipes;
       // console.log(result)
@@ -74,7 +74,7 @@ class App extends Component {
   getRecipe = async(id='47032')=>{
     if (this.state.recipeIsLoading===false) this.controlToggle('recipeIsLoading')
     try {
-      const key = '2e73868ca55f3a5d232f9a141d6f738a';
+      const key = '4b02d430081ecbce708a264d5792b53a';
       const res = await axios.get(`https://www.food2fork.com/api/get?key=${key}&rId=${id}`);
       console.log(`gotten result ${res.data}`)
       
@@ -197,10 +197,9 @@ class App extends Component {
       })
     }else{
       this.setState(prevState=>{
-        const index = prevState.likedList.findIndex(el=>el.recipe.recipe_id===prevState.isActive);
-        
+        const index = prevState.likedList.findIndex(el=>el.recipe.recipe_id===this.state.isActive);
         return{
-          likedList: [...prevState.likedList.slice(0, index), ...prevState.likedList.slice(index + 1, -1)]
+          likedList: [...prevState.likedList.slice(0, index), ...prevState.likedList.slice(index + 1)]
         }
       })
       
@@ -209,7 +208,6 @@ class App extends Component {
 
   }
   Liked=()=>{
-    console.log(this.state.likedList.findIndex(el=>el.recipe.recipe_id===this.state.isActive))
     return (this.state.likedList.findIndex(el=>el.recipe.recipe_id===this.state.isActive) !== -1)
   }
   render() {
@@ -218,6 +216,8 @@ class App extends Component {
       <div className="App">
         <div className="container">
         <Header handleGetResult={this.getResult}
+        likedList={this.state.likedList}
+        setActiveId={this.setActiveId}
         />
 
         {this.state.isLoading?<Loader

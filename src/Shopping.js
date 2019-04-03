@@ -1,6 +1,6 @@
 import React from 'react';
 import './Shopping.css';
-import Shopping_Item from './Shopping_item'
+import ShoppingItem from './ShoppingItem'
 
 
 const Shopping = (props) => {
@@ -11,7 +11,7 @@ const Shopping = (props) => {
                 <h2 className="heading-2">My Shopping List</h2>
     
                 <ul className="shopping__list">
-                {props.addToShopping.map((el,index)=><Shopping_Item
+                {props.addToShopping.map((el,index)=><ShoppingItem
                 ingredient_item={el}
                 key={index}
                 id={index}
@@ -21,7 +21,7 @@ const Shopping = (props) => {
     
                 <div className="Powered-by">
                     Powered by
-                    <a href="http://food2fork.com" target="_blank" className="link">Food2Fork.com</a>.
+                    <a href="http://food2fork.com" target="_blank" rel="noopener noreferrer" className="link">Food2Fork.com</a>.
                 </div>
     
             </div>
@@ -32,7 +32,7 @@ const Shopping = (props) => {
 
             <div className="Powered-by">
                 Powered by
-                <a href="http://food2fork.com" target="_blank" className="link">Food2Fork.com</a>.
+                <a href="http://food2fork.com" target="_blank" rel="noopener noreferrer" className="link">Food2Fork.com</a>.
             </div>
 
         </div>

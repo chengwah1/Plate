@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import './Recipe.css';
 import Recipe__ingredients from './Recipe__ingredients';
-import Recipe_serving from './Recipe_serving';
+import RecipeServing from './RecipeServing';
 import Loader from './Loader';
 
 class Recipe extends PureComponent{
@@ -19,7 +19,7 @@ class Recipe extends PureComponent{
                     <span>{this.props.Recipe.recipe.title}</span>
                 </h1>
             </figure>
-            <Recipe_serving
+            <RecipeServing
             recipe={this.props.Recipe}
             serving={this.props.serving}
             handleServing={this.props.handleServing}
@@ -50,7 +50,7 @@ class Recipe extends PureComponent{
                     This recipe was carefully designed and tested by 
                     <span className="recipe__by">{this.props.Recipe.recipe.publisher}</span>. Please check out directions at their website.
                 </p>
-                <a className="btn-small recipe__btn" href={this.props.Recipe.recipe.source_url} target="_blank">
+                <a className="btn-small recipe__btn" href={this.props.Recipe.recipe.source_url} target="_blank" rel="noopener noreferrer">
                     <span>Directions</span>
                     <svg className="search__icon">
                         <use href="img/icons.svg#icon-triangle-right"></use>

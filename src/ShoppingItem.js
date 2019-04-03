@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
-class Shopping_Item extends Component {
+
+class ShoppingItem extends Component {
 
     constructor(props) {
         super(props);
@@ -37,4 +37,4 @@ class Shopping_Item extends Component {
 
 
 
-export default Shopping_Item;
+export default ShoppingItem;

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Result.css';
 import Result_item from './Result_item';
-import Loader from './Loader';
 import Result_btn from './Result_btn';
 
 const Result = (props) => {

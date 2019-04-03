@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Recipe_serving = (props)=>{
+const RecipeServing = (props)=>{
     const numIngredients = props.recipe.recipe.ingredients.length;
     const serving = props.serving
     const Liked = props.Liked()
@@ -45,4 +45,4 @@ const Recipe_serving = (props)=>{
             </div>
     )
 }
-export default Recipe_serving;
+export default RecipeServing;

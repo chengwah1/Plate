@@ -15,7 +15,7 @@ class App extends Component {
     result: [],
     recipe: {},
     isLoading: true,
-    isActive: "47746",
+    isActive: "8f3e73",
     currentPage: 1,
     addToShopping: [],
     serving: 4,
@@ -34,8 +34,8 @@ class App extends Component {
         content:"input"
       }).then(value=>{
         this.keys = value;
-        this.getResult('pizza');
-        this.getRecipe(this.props.isActive);
+        this.getResult('pasta');
+        this.getRecipe('8f3e73');
       })
       
   }
@@ -85,7 +85,7 @@ class App extends Component {
   // *******************
   // ***Recipe Result***
   // *******************
-  getRecipe = async (id = '47746') => {
+  getRecipe = async (id) => {
       if (this.state.recipeIsLoading === false) this.controlToggle('recipeIsLoading')
       try {
           const key = this.keys;

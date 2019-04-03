@@ -1,11 +1,9 @@
 import React from 'react';
 import './Shopping.css';
-import Shopping_item from './Shopping_item'
+import Shopping_Item from './Shopping_item'
 
 
 const Shopping = (props) => {
-
-    
 
     if(props.addToShopping.length>0){
         return (
@@ -13,7 +11,7 @@ const Shopping = (props) => {
                 <h2 className="heading-2">My Shopping List</h2>
     
                 <ul className="shopping__list">
-                {props.addToShopping.map((el,index)=><Shopping_item
+                {props.addToShopping.map((el,index)=><Shopping_Item
                 ingredient_item={el}
                 key={index}
                 id={index}

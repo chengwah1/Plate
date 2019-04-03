@@ -17,7 +17,8 @@ class App extends Component {
     currentPage:1,
     addToShopping: [],
     serving:4,
-    recipeIsLoading:true
+    recipeIsLoading:true,
+    likedList:[]
   }
 
   componentWillMount() {
@@ -28,6 +29,9 @@ class App extends Component {
   controlToggle = (property) => {
     this.setState({[property]: !this.state.property})
   }
+  // *******************
+  // ***Search Result***
+  // *******************
   // updating state based on prevstate 
   // to avoid state inconsistent 
   setCurrentPage = (type)=> {
@@ -49,7 +53,7 @@ class App extends Component {
   getResult = async(query)=>{
     if (this.state.isLoading===false) this.controlToggle('isLoading')
     try {
-      const key = '0b8a037fbe9ffb3d9385542037f69a63';
+      const key = '2e73868ca55f3a5d232f9a141d6f738a';
       const res = await axios(`https://www.food2fork.com/api/search?key=${key}&q=${query}`);
       const resu = res.data.recipes;
       // console.log(result)
@@ -63,10 +67,14 @@ class App extends Component {
         alert(err);
     }
   }
+  // *******************
+  // ***Recipe Result***
+  // *******************
+
   getRecipe = async(id='47032')=>{
     if (this.state.recipeIsLoading===false) this.controlToggle('recipeIsLoading')
     try {
-      const key = '0b8a037fbe9ffb3d9385542037f69a63';
+      const key = '2e73868ca55f3a5d232f9a141d6f738a';
       const res = await axios.get(`https://www.food2fork.com/api/get?key=${key}&rId=${id}`);
       console.log(`gotten result ${res.data}`)
       
@@ -153,7 +161,9 @@ class App extends Component {
   setActiveId=(id)=>{
     this.getRecipe(id)
   }
-  
+  // *******************
+  // ***Shopping List***
+  // *******************
   handleAddToShopping = () => {
     this.setState(prevState => {
         return {
@@ -164,6 +174,7 @@ class App extends Component {
         }
     })
   }
+
   deleteShoppingItem=(id)=>{
     this.setState(prevState=>{
       prevState.addToShopping.splice(id,1)
@@ -172,12 +183,42 @@ class App extends Component {
       };
     })
   }
+  // *******************
+  // ***Like List*******
+  // *******************
+  pushToLikeList = () => {
+    // if id is in likeList then remove
+    // if id not in likeList then add
+    if(this.state.likedList.findIndex(el=>el.recipe.recipe_id===this.state.isActive) === -1){
+      this.setState(prevState => {
+        return {
+          likedList: [prevState.recipe, ...prevState.likedList]
+        }
+      })
+    }else{
+      this.setState(prevState=>{
+        const index = prevState.likedList.findIndex(el=>el.recipe.recipe_id===prevState.isActive);
+        
+        return{
+          likedList: [...prevState.likedList.slice(0, index), ...prevState.likedList.slice(index + 1, -1)]
+        }
+      })
+      
+    }
+ 
+
+  }
+  Liked=()=>{
+    console.log(this.state.likedList.findIndex(el=>el.recipe.recipe_id===this.state.isActive))
+    return (this.state.likedList.findIndex(el=>el.recipe.recipe_id===this.state.isActive) !== -1)
+  }
   render() {
 
     return (
       <div className="App">
         <div className="container">
-        <Header handleGetResult={this.getResult}/>
+        <Header handleGetResult={this.getResult}
+        />
 
         {this.state.isLoading?<Loader
         isLoading={this.state.isLoading}
@@ -198,6 +239,9 @@ class App extends Component {
         serving={this.state.serving}
         handleServing={this.handleServ}
         handleAddToShopping={this.handleAddToShopping}
+        likedList={this.state.likedList}
+        pushToLikeList={this.pushToLikeList}
+        Liked={this.Liked}
         />
 
         <Shopping 

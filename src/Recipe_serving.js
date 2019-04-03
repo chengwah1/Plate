@@ -1,10 +1,13 @@
 import React from 'react';
 
+
 const Recipe_serving = (props)=>{
     const numIngredients = props.recipe.recipe.ingredients.length;
     const serving = props.serving
+    const Liked = props.Liked()
     return(
             <div className="recipe__details">
+            
                 <div className="recipe__info">
                     <svg className="recipe__info-icon">
                         <use href="img/icons.svg#icon-stopwatch"></use>
@@ -33,9 +36,10 @@ const Recipe_serving = (props)=>{
                     </div>
 
                 </div>
-                <button className="recipe__love">
+
+                <button className="recipe__love" onClick={props.pushToLikeList}>
                     <svg className="header__likes">
-                        <use href="img/icons.svg#icon-heart-outlined"></use>
+                        <use href={Liked?"img/icons.svg#icon-heart":"img/icons.svg#icon-heart-outlined"}></use>
                     </svg>
                 </button>
             </div>

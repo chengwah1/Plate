@@ -3,13 +3,12 @@ import './Recipe.css';
 import Recipe__ingredients from './Recipe__ingredients';
 import Recipe_serving from './Recipe_serving';
 import Loader from './Loader';
-import axios from "axios";
 
 class Recipe extends PureComponent{
     constructor(props){
         super(props)
     }
-
+    
     render(){
         if(Object.entries(this.props.Recipe).length !== 0 && this.props.Recipe.constructor === Object && this.props.recipeIsLoading===false)
         return(
@@ -23,7 +22,10 @@ class Recipe extends PureComponent{
             <Recipe_serving
             recipe={this.props.Recipe}
             serving={this.props.serving}
-            handleServing={this.props.handleServing} />
+            handleServing={this.props.handleServing}
+            pushToLikeList={this.props.pushToLikeList}
+            Liked={this.props.Liked}
+            likedList={this.props.likedList} />
 
             <div className="recipe__ingredients">
                 <ul className="recipe__ingredient-list">
